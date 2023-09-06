@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>reCAPTCHA Demo</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer>
+    // Callback function executed when reCAPTCHA is completed
+    function onRecaptchaComplete(response) {
+        // Set the reCAPTCHA response token in a hidden input field or store it in a JavaScript variable
+        document.getElementById('g-recaptcha-response').value = response;
+    }
+    </script>
+</head>
+<body>
+<h1>reCAPTCHA Demo</h1>
+<form action="/verify" method="post">
+    <div class="g-recaptcha" th:attr="data-sitekey=${visibleSiteKey}"></div>
+    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+    <br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

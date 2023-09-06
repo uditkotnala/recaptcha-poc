@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reCAPTCHA Example</title>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lc_EfonAAAAAOdK9MqULILabD0-bHMYmhTYf9Lh" async defer></script>
+</head>
+<body>
+<h1>reCAPTCHA Example</h1>
+
+<!-- Invisible reCAPTCHA -->
+<form action="/submit-invisible" method="post" id="invisible-captcha-form">
+    <h2>Invisible reCAPTCHA</h2>
+    <div id="inv-site-key" th:attr="data-sitekey=${invisibleSiteKey}" data-size="invisible"></div>
+    <button type="submit" onclick="event.preventDefault(); executeInvisibleRecaptcha();">Submit</button>
+    <!-- Hidden input for invisible reCAPTCHA response -->
+    <input type="hidden" id="invisible-recaptcha-response" name="g-recaptcha-response">
+</form>
+
+<script th:inline="javascript">
+        // Function to execute the invisible reCAPTCHA
+        function executeInvisibleRecaptcha() {
+            var invisibleSiteKey = /*[[${invisibleSiteKey}]]*/ '';
+            grecaptcha.execute(invisibleSiteKey, { action: 'submit' }).then(function(token) {
+                // Set the invisible reCAPTCHA response in the hidden input field
+                document.getElementById("invisible-recaptcha-response").value = token;
+                 // Submit the form
+                var form = document.getElementById("invisible-captcha-form"); // Replace 'your-form-id' with the actual ID of your form
+                form.submit();
+            });
+        }
+    </script>
+</body>
+</html>
